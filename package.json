@@ -5,7 +5,8 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "webpack serve --config webpack.config.js",
-		"build": "webpack --config webpack.config.production.js"
+		"build": "webpack --config webpack.config.production.js",
+		"upload": "git subtree push --prefix dist origin gh-pages"
 	},
 	"devDependencies": {
 		"@types/react": "^17.0.5",
