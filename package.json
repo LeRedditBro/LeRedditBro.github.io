@@ -6,7 +6,8 @@
 	"scripts": {
 		"start": "webpack serve --config webpack.config.js",
 		"build": "webpack --config webpack.config.production.js",
-		"upload": "git push origin `git subtree split --prefix dist master`:gh-pages --force"
+		"upload": "git push origin `git subtree split --prefix dist master`:gh-pages --force",
+		"build-and-push": "yarn build && yarn upload"
 	},
 	"devDependencies": {
 		"@types/react": "^17.0.5",
