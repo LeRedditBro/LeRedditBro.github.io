@@ -5,5 +5,7 @@ export default {
 		primary: "#3b31c2",
 		secondary: "#d0f344",
 		thirdary: "#f53dbb",
+
+		primaryText: "rgba(255,255,255,087)",
 	}
 }

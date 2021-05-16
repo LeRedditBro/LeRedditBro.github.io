@@ -1,13 +1,33 @@
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core'
 import React from 'react'
 
-import styled, { ThemeProvider } from 'styled-components'
-import MainScreen from './MainScreen/MainScreen'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
+import CursorStyles from './elements/CursorStyles'
+import MainScreen from './screens/MainScreen/MainScreen'
 import theme from './Theme'
+
+const muiTheme = createMuiTheme({
+	palette: {
+		type: 'dark'
+	}
+})
+
+const GlobalStyle = createGlobalStyle`
+	::selection {
+		color: ${theme.palette.thirdary};
+		background-color: ${theme.palette.primary};
+	}
+`
 
 export default function App() {
 	return (
-		<ThemeProvider theme={theme}>
-			<MainScreen />
-		</ThemeProvider>
+		<MuiThemeProvider theme={muiTheme}>
+			<ThemeProvider theme={theme}>
+				<GlobalStyle />
+				<CursorStyles>
+					<MainScreen />
+				</CursorStyles>
+			</ThemeProvider>
+		</MuiThemeProvider>
 	)
 }

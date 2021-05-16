@@ -11,8 +11,6 @@ import Hexagon from 'mdi-material-ui/Hexagon'
 
 import Plus from 'mdi-material-ui/Plus'
 
-import { Box } from '@material-ui/core'
-
 const OpacityPlus = () => (
 	<div style={{ opacity: 0.25 }}>
 		<Plus />
@@ -21,13 +19,16 @@ const OpacityPlus = () => (
 
 export default function IconGrid({ cellSize, style = {} }) {
 	return (
-		<Box
-			display="grid"
-			width={cellSize * 4}
-			height={cellSize * 4}
-			gridTemplateColumns="repeat(4, 1fr)"
-			gridTemplateRows="repeat(4, 1fr)"
-			style={{ placeItems: 'center', ...style }}
+		<div
+			style={{
+				display: 'grid',
+				width: cellSize * 4,
+				height: cellSize * 4,
+				gridTemplateColumns: "repeat(4, 1fr)",
+				gridTemplateRows: "repeat(4, 1fr)",
+				placeItems: 'center',
+				...style
+			}}
 		>
 			<Skull />
 			<OpacityPlus />
@@ -48,6 +49,6 @@ export default function IconGrid({ cellSize, style = {} }) {
 			<Bug />
 			<OpacityPlus />
 			<Cat />
-		</Box>
+		</div>
 	)
 }

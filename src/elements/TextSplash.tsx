@@ -16,10 +16,9 @@ const TextSplashDiv = styled.div`
 	
 	z-index: 1;
 
-	&::selection {
-		color: ${({ theme }) => theme.palette.thirdary};
-		background-color: ${({ theme }) => theme.palette.primary};
-	}
+	white-space: pre;
+	width: fit-content;
+	height: fit-content;
 `
 
 
@@ -40,26 +39,37 @@ const TextSplashShadowDiv = styled.div`
 
 	z-index: 0;
 
+	white-space: pre;
+	width: fit-content;
+	height: fit-content;
+
 	color: ${Theme.palette.thirdary};
 `
 
 const TextGridContainer = styled.div`
 	display: grid;
-	width: 500px;
-	margin: 260px 100px;
 	mix-blend-mode: exclusion;
 	font-size: 150px;
+	margin-left: 150px;
+`
+
+const FlexWrapper = styled.div`
+	display: flex;
+	align-items: center;
+	height: 100%;
 `
 
 export default function TextSplash({ children }) {
 	return (
-		<TextGridContainer>
-			<TextSplashShadowDiv>
-				{children}
-			</TextSplashShadowDiv>
-			<TextSplashDiv>
-				{children}
-			</TextSplashDiv>
-		</TextGridContainer>
+		<FlexWrapper>
+			<TextGridContainer>
+				<TextSplashShadowDiv>
+					{children}
+				</TextSplashShadowDiv>
+				<TextSplashDiv>
+					{children}
+				</TextSplashDiv>
+			</TextGridContainer>
+		</FlexWrapper>
 	)
 }

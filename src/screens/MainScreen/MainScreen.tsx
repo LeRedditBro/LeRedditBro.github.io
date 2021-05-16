@@ -4,11 +4,12 @@ import { html } from 'print-xml'
 import { ServerStyleSheets } from '@material-ui/styles'
 
 import styled, { keyframes } from 'styled-components'
-import Paper from '../components/Paper'
-import IconGrid from '../elements/IconGrid'
-import Theme from '../Theme'
-import AppBar from '../elements/AppBar'
-import TextSplash from '../elements/TextSplash'
+import Paper from '../../components/Paper'
+import IconGrid from '../../elements/IconGrid'
+import Theme from '../../Theme'
+import AppBar from '../../elements/AppBar'
+import TextSplash from '../../elements/TextSplash'
+import WorkScreen from '../WorkScreen/WorkScreen'
 
 const sheets = new ServerStyleSheets()
 const sheets1 = new ServerStyleSheets()
@@ -33,6 +34,39 @@ const bg1 = html({
 })
 
 const BackgroundWrapper = styled.div`
+	/* width: 100%;
+	height: 100%; */
+
+	background-color: ${({ theme }) => theme.palette.background};
+	background-image: ${bg1};
+
+	flex: 1;
+	
+	overflow-y: scroll;
+
+	animation: 40s ${moveBG} linear infinite;
+	
+	&::-webkit-scrollbar {
+		width: 25px;
+	}
+	/* Track */
+	&::-webkit-scrollbar-track {
+		background: ${({ theme }) => theme.palette.primary}aa;
+	}
+
+	/* Handle */
+	&::-webkit-scrollbar-thumb {
+		background: ${({ theme }) => theme.palette.secondary}dd;
+	}
+
+	/* Handle on hover */
+	&::-webkit-scrollbar-thumb:hover {
+		background: ${({ theme }) => theme.palette.secondary};
+	}
+
+`
+
+const OuterWrapper = styled.div`
 	position: absolute;
 
 	top: 0;
@@ -40,47 +74,20 @@ const BackgroundWrapper = styled.div`
 	right: 0;
 	left: 0;
 
-	/* width: 100%;
-	height: 100%; */
-
-	background-color: ${({ theme }) => theme.palette.background};
-	background-image: ${bg1};
-
-	animation: 40s ${moveBG} linear infinite;
-
-	&::-webkit-scrollbar {
-		width: 40px;
-	}
-
-	/* TODO style scrollbar more */
-
-`
-
-const StyledPaper = styled(Paper)`
-	position: absolute;
-
-	top: 150px;
-	left: 225px;
-
-	padding: 1rem;
-
-	color: ${({ theme }) => theme.palette.secondary};
-	font-weight: 900;
-	font-size: 30px;
-	font-family: Roboto, 'sans-serif';
+	display: flex;
+	flex-direction: column;
 `
 
 export default function MainScreen() {
 	return (
-		<BackgroundWrapper>
+		<OuterWrapper>
 			<AppBar />
-			<TextSplash>
-				Beautifully
-				Efficient
-			</TextSplash>
-			{/* <StyledPaper square>
-				<IconGrid cellSize={100} />
-			</StyledPaper> */}
-		</BackgroundWrapper>
+			<BackgroundWrapper>
+				<TextSplash>
+					Beautifully<br />Efficient
+				</TextSplash>
+				<WorkScreen />
+			</BackgroundWrapper>
+		</OuterWrapper>
 	)
 }
