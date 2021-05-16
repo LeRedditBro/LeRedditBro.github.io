@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "webpack serve --config webpack.config.js",
-		"build": "webpack --config webpack.config.production.js",
+		"build": "rm -rf ./dist && webpack --config webpack.config.production.js",
 		"upload": "git push origin `git subtree split --prefix dist master`:gh-pages --force",
 		"build-and-push": "yarn build && yarn upload"
 	},
@@ -22,7 +22,6 @@
 	},
 	"dependencies": {
 		"@material-ui/core": "^4.11.4",
-		"@material-ui/styles": "^4.11.4",
 		"mdi-material-ui": "^6.22.1",
 		"print-xml": "^1.0.22",
 		"react": "^17.0.2",
