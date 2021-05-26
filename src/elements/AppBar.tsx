@@ -29,7 +29,7 @@ const StyledLogoBox = styled(Box)`
 export default function AppBar() {
 	return (
 		<AppBarRoot>
-			<StyledLogoBox display="flex" alignItems="center" className="cursor-pointer">
+			<StyledLogoBox display="inline-flex" alignItems="center" className="cursor-pointer">
 				<Box color={Theme.palette.secondary} display="flex">
 					<AtIcon />
 				</Box>

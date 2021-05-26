@@ -66,7 +66,7 @@ export default function TextSplash({ children }) {
 				<TextSplashShadowDiv>
 					{children}
 				</TextSplashShadowDiv>
-				<TextSplashDiv>
+				<TextSplashDiv className="cursor-text">
 					{children}
 				</TextSplashDiv>
 			</TextGridContainer>

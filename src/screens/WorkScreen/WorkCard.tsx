@@ -22,8 +22,6 @@ const CardRoot = styled.div`
 	box-shadow: 0 0 0 0px ${Theme.palette.thirdary};
 	transition: all .4s;
 
-	max-width: 350px;
-
 	&:hover {
 		box-shadow: 0 0 0 8px ${Theme.palette.thirdary};
 		transform: scale(1.1);
@@ -38,26 +36,35 @@ const StyledTag = styled.div`
 	padding: 2px 8px;
 `
 
-export default function WorkCard({ icon, title, subtitle, text }) {
+const StyledAnchor = styled.a`
+	text-decoration: none;
+	color: inherit;
+	display: flex;
+	max-width: 350px;
+`
+
+export default function WorkCard({ icon, title, subtitle, text, href }) {
 	return (
-		<CardRoot>
-			<Box
-				width="100%"
-				height="200px"
-				display="flex"
-				justifyContent="center"
-				alignItems="center"
-				borderRadius={8}
-				color={Theme.palette.secondary}
-				style={{ backgroundColor: 'rgba(0,0,0,0.17)' }}
-			>
-				{icon}
-			</Box>
-			<Typography variant="h5" align="center">{title}</Typography>
-			<Box display="flex" justifyContent="center">
-				<StyledTag><Typography variant="subtitle2">{subtitle}</Typography></StyledTag>
-			</Box>
-			<Typography variant="subtitle1">{text}</Typography>
-		</CardRoot>
+		<StyledAnchor className="cursor-pointer" href={href} target="_blank">
+			<CardRoot>
+				<Box
+					width="100%"
+					height="200px"
+					display="flex"
+					justifyContent="center"
+					alignItems="center"
+					borderRadius={8}
+					color={Theme.palette.secondary}
+					style={{ backgroundColor: 'rgba(0,0,0,0.17)' }}
+				>
+					{icon}
+				</Box>
+				<Typography variant="h5" align="center">{title}</Typography>
+				<Box display="flex" justifyContent="center">
+					<StyledTag><Typography variant="subtitle2">{subtitle}</Typography></StyledTag>
+				</Box>
+				<Typography variant="subtitle1">{text}</Typography>
+			</CardRoot>
+		</StyledAnchor>
 	)
 }

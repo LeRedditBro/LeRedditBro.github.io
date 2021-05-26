@@ -1,13 +1,13 @@
 import { html } from 'print-xml'
 import React from 'react'
 
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 
 import CursorDefault from 'mdi-material-ui/CursorDefault'
 import CursorPointer from 'mdi-material-ui/CursorPointer'
 
 import Theme from '../Theme'
-import { CursorText } from 'mdi-material-ui'
+import { CursorText, Flash } from 'mdi-material-ui'
 
 const iconToCursor = (Icon) => (
 	html({
@@ -25,31 +25,33 @@ const iconToCursor = (Icon) => (
 	})
 )
 
+const createGlobalCursor = (selector, cursor, fallback) => {
+	return createGlobalStyle`
+	${selector} {
+		cursor: ${cursor} 0 4, ${fallback};
+	}
+	`
+}
+
 const auto = iconToCursor(CursorDefault)
 const pointer = iconToCursor(CursorPointer)
 const text = iconToCursor(CursorText)
+const flash = iconToCursor(Flash)
 
-const CursorRules = styled.div`
+const AutoStyle = createGlobalCursor('*, .cursor-auto', auto, 'auto')
+const PointerStyle = createGlobalCursor('.cursor-pointer, .cursor-pointer *', pointer, 'pointer')
+const TextStyle = createGlobalCursor('.cursor-text', text, 'text')
+const FlashStyle = createGlobalCursor('.cursor-flash', flash, 'auto')
 
-	cursor: ${auto} 0 4, auto;
-
-	& .cursor-pointer {
-		cursor: ${pointer} 0 4, pointer;
-	}
-
-	& .cursor-auto {
-		cursor: ${auto} 0 4, auto;
-	}
-
-	& .cursor-text {
-		cursor: ${text} 0 12, text;
-	}
-`
 
 export default function CursorStyles({ children }) {
 	return (
-		<CursorRules>
+		<>
+			<AutoStyle />
+			<PointerStyle />
+			<TextStyle />
+			<FlashStyle />
 			{children}
-		</CursorRules>
+		</>
 	)
 }

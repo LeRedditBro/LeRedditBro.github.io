@@ -12,10 +12,6 @@ import TextSplash from '../../elements/TextSplash'
 import WorkScreen from '../WorkScreen/WorkScreen'
 
 const sheets = new ServerStyleSheets()
-const sheets1 = new ServerStyleSheets()
-const sheets2 = new ServerStyleSheets()
-const sheets3 = new ServerStyleSheets()
-const sheets4 = new ServerStyleSheets()
 
 const BG_SIZE = 300
 
@@ -34,8 +30,6 @@ const bg1 = html({
 })
 
 const BackgroundWrapper = styled.div`
-	/* width: 100%;
-	height: 100%; */
 
 	background-color: ${({ theme }) => theme.palette.background};
 	background-image: ${bg1};
