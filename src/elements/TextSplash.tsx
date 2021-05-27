@@ -30,7 +30,7 @@ const TextSplashShadowDiv = styled.div`
 	grid-row: 1;
 	grid-column: 1;
 	
-	transform: translate(5px, 5px);
+	transform: translate(0.5vw, 0.5vw);
 	
 	background-clip: text;
 	
@@ -49,8 +49,8 @@ const TextSplashShadowDiv = styled.div`
 const TextGridContainer = styled.div`
 	display: grid;
 	mix-blend-mode: exclusion;
-	font-size: 150px;
-	margin-left: 150px;
+	font-size: 10vw;
+	margin-left: 10vw;
 `
 
 const FlexWrapper = styled.div`
