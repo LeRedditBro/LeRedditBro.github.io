@@ -9,7 +9,9 @@ const TextSplashDiv = styled.div`
 	font-family: 'Roboto Mono';
 	font-size: inherit;
 	
-	color: ${({ theme }) => theme.palette.secondary};
+	/* color: ${({ theme }) => theme.palette.secondary}; */
+	color: ${Theme.palette.thirdary};
+
 	
 	grid-row: 1;
 	grid-column: 1;
@@ -43,7 +45,9 @@ const TextSplashShadowDiv = styled.div`
 	width: fit-content;
 	height: fit-content;
 
-	color: ${Theme.palette.thirdary};
+	/* color: ${Theme.palette.thirdary}; */
+	color: ${({ theme }) => theme.palette.secondary};
+
 `
 
 const TextGridContainer = styled.div`
@@ -56,7 +60,8 @@ const TextGridContainer = styled.div`
 const FlexWrapper = styled.div`
 	display: flex;
 	align-items: center;
-	height: 100%;
+	height: 78%;
+	z-index: 1;
 `
 
 export default function TextSplash({ children }) {

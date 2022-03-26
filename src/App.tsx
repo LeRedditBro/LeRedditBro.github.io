@@ -8,7 +8,13 @@ import theme from './Theme'
 
 const muiTheme = createMuiTheme({
 	palette: {
-		type: 'dark'
+		type: 'dark',
+		primary: {
+			main: '#3b31c2'
+		},
+		secondary: {
+			main: '#f53dbb'
+		}
 	}
 })
 

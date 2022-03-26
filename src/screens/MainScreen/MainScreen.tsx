@@ -4,12 +4,13 @@ import { html } from 'print-xml'
 import { ServerStyleSheets } from '@material-ui/styles'
 
 import styled, { keyframes } from 'styled-components'
-import Paper from '../../components/Paper'
 import IconGrid from '../../elements/IconGrid'
 import Theme from '../../Theme'
 import AppBar from '../../elements/AppBar'
 import TextSplash from '../../elements/TextSplash'
-import WorkScreen from '../WorkScreen/WorkScreen'
+import WorkScreen from '../WorkPanel/WorkPanel'
+import { Box } from '@material-ui/core'
+import GellyHover from './GellyHover'
 
 const sheets = new ServerStyleSheets()
 
@@ -33,6 +34,8 @@ const BackgroundWrapper = styled.div`
 
 	background-color: ${({ theme }) => theme.palette.background};
 	background-image: ${bg1};
+
+	position: relative;
 
 	flex: 1;
 	
@@ -75,12 +78,14 @@ const OuterWrapper = styled.div`
 export default function MainScreen() {
 	return (
 		<OuterWrapper>
-			<AppBar />
 			<BackgroundWrapper>
-				<TextSplash>
-					Beautifully<br />Efficient
-				</TextSplash>
-				<WorkScreen />
+				<Box zIndex="999" position="sticky" top="0px"><AppBar /></Box>
+				<GellyHover style={{ width: '100%', height: '100%' }}>
+					<TextSplash>
+						Beautifully<br />Efficient
+					</TextSplash>
+					<WorkScreen />
+				</GellyHover>
 			</BackgroundWrapper>
 		</OuterWrapper>
 	)
