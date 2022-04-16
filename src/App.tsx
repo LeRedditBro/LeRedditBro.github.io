@@ -1,9 +1,10 @@
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core'
-import React from 'react'
+import { Route, Routes } from 'react-router-dom'
 
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import CursorStyles from './elements/CursorStyles'
 import MainScreen from './screens/MainScreen/MainScreen'
+import Game from './screens/RogueEx/Game'
 import theme from './Theme'
 
 const muiTheme = createMuiTheme({
@@ -27,13 +28,18 @@ const GlobalStyle = createGlobalStyle`
 
 export default function App() {
 	return (
-		<MuiThemeProvider theme={muiTheme}>
-			<ThemeProvider theme={theme}>
-				<GlobalStyle />
-				<CursorStyles>
-					<MainScreen />
-				</CursorStyles>
-			</ThemeProvider>
-		</MuiThemeProvider>
+		<Routes>
+			<Route path="/" element={
+				<MuiThemeProvider theme={muiTheme}>
+					<ThemeProvider theme={theme}>
+						<GlobalStyle />
+						<CursorStyles>
+							<MainScreen />
+						</CursorStyles>
+					</ThemeProvider>
+				</MuiThemeProvider>
+			} />
+			<Route path="/RogueEx/*" element={<Game />} />
+		</Routes>
 	)
 }

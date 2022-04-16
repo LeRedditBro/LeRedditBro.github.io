@@ -12,6 +12,8 @@ import workExperience from './workExperience'
 import LinkedInBadge from './LinkedInBadge'
 import projects from './projects'
 import hobbies from './hobbies'
+import { Link } from 'react-router-dom'
+import Sword from 'mdi-material-ui/Sword';
 
 const StyledChip = styled(Chip)`
 	background: #1b2769;
@@ -67,6 +69,7 @@ export default function WorkScreen() {
 								<Box zIndex="5" display="flex" flexWrap="wrap" maxWidth="400px" justifyContent="center" gridGap="0.5rem">
 									{/* @ts-ignore */}
 									{projects.map(e => <Tooltip key={e.name} arrow title={<Box fontSize="16px" style={{ lineHeight: '20px' }}>{e.description}</Box>}><span><Button variant="contained" className="cursor-pointer" color="secondary" key={e.name} startIcon={e.icon} component="a" href={e.url} target="_blank">{e.name}</Button></span></Tooltip>)}
+									<Button variant="contained" className="cursor-pointer" color="secondary" startIcon={<Sword />} component={Link} to="/RogueEx">RogueEx</Button>
 								</Box>
 							}
 						/>
