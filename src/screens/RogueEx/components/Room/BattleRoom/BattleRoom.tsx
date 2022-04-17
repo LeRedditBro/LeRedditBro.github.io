@@ -1,53 +1,92 @@
 import { Box } from '@material-ui/core';
 import produce from 'immer';
-import { useEffect, useState } from 'react';
-import usePlayer from '../../GameProvider/usePlayer';
+import { useEffect, useRef, useState } from 'react';
 import Info from '../../Info/Info';
 import Room from '../Room';
 import Enemy from './Enemy';
-import Player from './Player';
+import Ally from './Ally';
 
-export default function BattleRoom({ message = undefined as any, enemies, onClear = undefined as any, onFail = undefined as any, ...rest }) {
+export default function BattleRoom({ allies, message = undefined as any, enemies, onSuccess = undefined as any, onDefeat = undefined as any, ...rest }) {
 
-	const player = usePlayer();
 	const [encounter, setEncounter] = useState({
-		enemies, attack: (regex) => {
-			setEncounter((prev) => {
-				const { enemies } = prev;
-				const newEnemies = produce(enemies as any[], draft => {
-					draft.forEach(e => {
-						e.health = e.health.replace(regex, '');
-					})
-				});
-
-				let nPlayerHealth;
-				player.setHealth(prev => {
-					nPlayerHealth = prev.replace(regex, '');
-					return nPlayerHealth;
-				});
-
-				if (!nPlayerHealth) {
-					onFail?.();
-					return prev;
-				}
-
-				const filteredEnemies = newEnemies.filter(e => e.health);
-
-				if (!filteredEnemies.length) onClear?.();
-
-				return produce(prev, draft => {
-					draft.enemies = filteredEnemies;
-				});
-			})
-		}
+		enemies,
+		allies,
 	});
 
+	const enemiesRef = useRef(enemies);
+
+	const playTurn = (callback: (draft, prev) => void) => {
+		setEncounter((prev) => {
+			const newEncounter = produce(prev, stage => {
+
+				callback(stage, prev);
+
+				// @ts-ignore
+				stage.player?.onTurnEnd?.(stage);
+				stage.enemies.forEach(e => e?.onTurnEnd?.(stage));
+			});
+
+			return newEncounter;
+		});
+	}
+
 	useEffect(() => {
-		// @ts-ignore
-		window.encounter = encounter;
-		return () => {
+		const encounterContext = {
+			get enemies() {
+				return enemiesRef.current;
+			},
+			get allies() {
+				return enemiesRef.current;
+			},
+			attack: (regex) => {
+				playTurn((draft, prev) => {
+					// damage enemies
+					draft.enemies.forEach(e => {
+						e.health = e.health.replace(regex, '');
+					})
+
+					draft.allies.forEach(a => {
+						a.health = a.health.replace(regex, '');
+					});
+
+
+					const handleHealth = (entities) => {
+						return entities.filter(e => {
+							if (e.health) {
+								return true;
+							}
+
+							e?.onDeath?.();
+							return false;
+						});
+					}
+
+					const filteredAllies = handleHealth(draft.allies);
+					draft.allies = filteredAllies;
+
+					const filteredEnemies = handleHealth(draft.enemies);
+					draft.enemies = filteredEnemies;
+
+
+
+					if (!filteredAllies.length) onDefeat?.();
+					else if (!filteredEnemies.length) onSuccess?.();
+				});
+			}
+
+		};
+
+
+		Object.keys(encounterContext).forEach(k => {
 			// @ts-ignore
-			window.encounter = null;
+			window[k] = encounterContext[k];
+		})
+
+		return () => {
+			Object.keys(encounterContext).forEach(k => {
+				// @ts-ignore
+				delete window[k];
+			})
 		}
 	}, [encounter])
 
@@ -61,7 +100,11 @@ export default function BattleRoom({ message = undefined as any, enemies, onClea
 					</>
 				)}
 				<Box display="flex">
-					<Player player={player} />
+					<Box display="flex" flexDirection="column">
+						{encounter.allies.map((a, index) => (
+							<Ally ally={a} key={index} />
+						))}
+					</Box>
 					<Box mr="8px" ml="8px">vs</Box>
 					<Box display="flex" flexDirection="column">
 						{encounter.enemies.map((e, index) => (
