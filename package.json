@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "webpack serve --config webpack.config.js",
 		"build": "rm -rf ./dist && webpack --config webpack.config.production.js",
-		"publish": "git add dist && git commit -m \"gh-pages auto upload\" && yarn exec ./upload.sh",
+		"publish": "git add dist && git commit -m \"gh-pages auto upload\" && bash ./upload.sh",
 		"build-publish": "yarn build && yarn run publish"
 	},
 	"devDependencies": {
