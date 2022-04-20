@@ -1,7 +1,7 @@
 import { Route } from 'react-router-dom'
 import Link from '../../components/Link/Link'
 import Room from '../../components/Room/Room'
-import PlainsRoom from './PlainsRoom/PlainsRoom'
+import PlainsRoom from '../PlainsRoom/PlainsRoom'
 import Readme from './Readme'
 
 export default function StartingRoom() {

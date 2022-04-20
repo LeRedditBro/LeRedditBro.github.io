@@ -13,21 +13,28 @@ export default function BattleRoom({ allies, message = undefined as any, enemies
 		allies,
 	});
 
+	const encounterRef = useRef(encounter);
+
+	useEffect(() => {
+		encounterRef.current = encounter;
+	}, [encounter]);
+
 	const enemiesRef = useRef(enemies);
 
 	const playTurn = (callback: (draft, prev) => void) => {
-		setEncounter((prev) => {
-			const newEncounter = produce(prev, stage => {
 
-				callback(stage, prev);
+		const prev = encounterRef.current;
 
-				// @ts-ignore
-				stage.player?.onTurnEnd?.(stage);
-				stage.enemies.forEach(e => e?.onTurnEnd?.(stage));
-			});
+		const newEncounter = produce(prev, stage => {
 
-			return newEncounter;
+			callback(stage, prev);
+
+			// @ts-ignore
+			stage.player?.onTurnEnd?.(stage);
+			stage.enemies.forEach(e => e?.onTurnEnd?.(stage));
 		});
+
+		setEncounter(newEncounter);
 	}
 
 	useEffect(() => {
@@ -51,13 +58,14 @@ export default function BattleRoom({ allies, message = undefined as any, enemies
 
 
 					const handleHealth = (entities) => {
-						return entities.filter(e => {
-							if (e.health) {
-								return true;
+						entities.forEach(e => {
+							if (!e.health) {
+								e?.onDeath?.(draft);
 							}
+						});
 
-							e?.onDeath?.();
-							return false;
+						return entities.filter(e => {
+							return Boolean(e.health);
 						});
 					}
 

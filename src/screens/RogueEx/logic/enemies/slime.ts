@@ -20,22 +20,24 @@ const slime = ({ health, name = 'slime', splitDivisions = 2, splitsRemaining = 1
 				sightRequired: 0,
 			}
 		],
-		onDeath: function onDeath(encounterDraft, entity) {
+		onDeath: function onDeath(encounterDraft) {
 
 			if (splitsRemaining) {
 
-				const splitSize = Math.floor(entity.originalHealth.length / splitDivisions);
-				const remainder = entity.originalHealth.length % splitDivisions;
+				const splitSize = Math.floor(this.originalHealth.length / splitDivisions);
+				const remainder = this.originalHealth.length % splitDivisions;
 
 				let splitOffset = 0;
 				for (let i = 0; i < splitDivisions; i++) {
 
 					const healthSize = i === 0 ? splitSize + remainder : splitSize;
-					const splitHealth = entity.originalHealth.substr(splitOffset, healthSize);
+					const splitHealth = this.originalHealth.substr(splitOffset, healthSize);
 					splitOffset += healthSize;
 
 					encounterDraft.enemies.push(slime({ health: splitHealth, splitsRemaining: splitsRemaining - 1 }));
 				}
+
+				console.log(`🪓 ${name} has split into %o`, splitDivisions);
 
 			} else {
 				base.onDeath.call(this);

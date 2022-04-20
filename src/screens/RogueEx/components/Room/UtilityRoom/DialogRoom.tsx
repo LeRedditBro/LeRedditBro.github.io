@@ -5,14 +5,14 @@ import useSight from '../../GameProvider/useSight';
 import Info from '../../Info/Info';
 import Room from '../Room'
 
-type DialogOption = {
-	name: string,
+export type DialogOption = {
+	name: any,
 	selectedEl?: any,
 	onSelect?: () => void,
 	requiredSight?: number,
 }
 
-export default function DialogRoom({ message, options }: { message: any, options: DialogOption[] }) {
+export default function DialogRoom({ message, options, selectedOption = undefined }: { message: any, options: DialogOption[], selectedOption?: DialogOption }) {
 
 	const [clickedOption, setClickedOption] = useState(undefined as any)
 	const sight = useSight();
@@ -20,6 +20,10 @@ export default function DialogRoom({ message, options }: { message: any, options
 	useEffect(() => {
 		clickedOption?.onSelect?.();
 	}, [clickedOption])
+
+	useEffect(() => {
+		setClickedOption(selectedOption);
+	}, [selectedOption])
 
 	if (clickedOption?.selectedEl) {
 		return clickedOption.selectedEl;

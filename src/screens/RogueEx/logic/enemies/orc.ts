@@ -1,6 +1,6 @@
 import livingBase from "../livingBase";
 
-const slime = ({ health, name = 'orc', regeneration }) => {
+const orc = ({ health, name = 'orc', regeneration }) => {
 
 	const base = livingBase();
 
@@ -19,11 +19,13 @@ const slime = ({ health, name = 'orc', regeneration }) => {
 		onTurnEnd: function onTurnEnd(stage) {
 			const self = stage.enemies.find(e => e.uuid === this.uuid);
 
-			if (self) {
+			if (self && self.health.length < health.length) {
 				self.health += regeneration;
+				self.health = self.health.substr(0, health.length);
+				console.log(`💞 ${name} regenerated %o health!`, regeneration);
 			}
 		}
 	})
 };
 
-export default slime;
+export default orc;
